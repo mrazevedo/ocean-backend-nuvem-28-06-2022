@@ -1,8 +1,15 @@
+require("dotenv").config();
+
 const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 
-const url = "mongodb+srv://admin:ihsUwd18WTX8TvhU@cluster0.fpb1p.mongodb.net/?retryWrites=true&w=majority";
-const dbName = "ocean_bancodedados_27_06_2022";
+const dbHost = process.env.DB_HOST;
+const dbPort = process.env.DB_PORT;
+const dbName = process.env.DB_NAME;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
+
+const url = `mongodb+srv://${dbUser}:${dbPassword}@${dbHost}`;
 
 async function main() {
   // Conexão com o banco de dados
@@ -88,8 +95,8 @@ async function main() {
     res.send("Item removido com sucesso.");
   });
 
-  app.listen(process.env.PORT || 3000, () =>
-    console.log("Servidor rodando em http://localhost:3000")
+  app.listen(process.env.PORT || dbPort, () =>
+    console.log(`Servidor rodando em http://localhost:${dbPort}`)
   );
 }
 
